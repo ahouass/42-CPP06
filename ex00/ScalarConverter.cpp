@@ -13,7 +13,6 @@ void ScalarConverter::convert(const std::string& literal) {
         return;
     }
 
-    // Check for special cases first
     if (literal == "nan" || literal == "nanf" || 
         literal == "+inf" || literal == "+inff" || literal == "inf" || literal == "inff" ||
         literal == "-inf" || literal == "-inff") {
@@ -21,25 +20,22 @@ void ScalarConverter::convert(const std::string& literal) {
         return;
     }
 
-    // Check for char literal: 'x'
     if (literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'') {
         convertFromChar(literal);
         return;
     }
 
-    // Check for float literal: ends with 'f' or 'F'
     if (!literal.empty() && (literal[literal.length() - 1] == 'f' || literal[literal.length() - 1] == 'F')) {
         convertFromFloat(literal);
         return;
     }
 
-    // Check for double literal: contains decimal point
+    // Check for double
     if (literal.find('.') != std::string::npos) {
         convertFromDouble(literal);
         return;
     }
 
-    // Default to int
     convertFromInt(literal);
 }
 
@@ -110,7 +106,7 @@ void ScalarConverter::convertFromFloat(const std::string& literal) {
         std::cout << "Error: Invalid float literal" << std::endl;
         return;
     }
-    
+
     std::cout << "char: ";
     int intVal = static_cast<int>(floatValue);
     if (intVal < 0 || intVal > 127 || floatValue != static_cast<float>(intVal)) {
@@ -139,7 +135,6 @@ void ScalarConverter::convertFromFloat(const std::string& literal) {
         std::cout << (floatValue > 0 ? "+inff" : "-inff");
     } else {
         std::cout << floatValue;
-        // Check if it's a whole number
         if (std::floor(floatValue) == floatValue) {
             std::cout << ".0";
         }
@@ -155,7 +150,7 @@ void ScalarConverter::convertFromFloat(const std::string& literal) {
         std::cout << (doubleValue > 0 ? "+inf" : "-inf");
     } else {
         std::cout << doubleValue;
-        if (std::floor(doubleValue) == doubleValue && std::abs(doubleValue) < 1e7) {
+        if (std::floor(doubleValue) == doubleValue) {
             std::cout << ".0";
         }
     }
@@ -201,7 +196,7 @@ void ScalarConverter::convertFromDouble(const std::string& literal) {
         std::cout << (floatValue > 0 ? "+inff" : "-inff");
     } else {
         std::cout << floatValue;
-        if (std::floor(floatValue) == floatValue && std::abs(floatValue) < 1e7) {
+        if (std::floor(floatValue) == floatValue) {
             std::cout << ".0";
         }
         std::cout << "f";
@@ -215,7 +210,7 @@ void ScalarConverter::convertFromDouble(const std::string& literal) {
         std::cout << (doubleValue > 0 ? "+inf" : "-inf");
     } else {
         std::cout << doubleValue;
-        if (std::floor(doubleValue) == doubleValue && std::abs(doubleValue) < 1e7) {
+        if (std::floor(doubleValue) == doubleValue) {
             std::cout << ".0";
         }
     }

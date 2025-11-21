@@ -4,8 +4,10 @@
 
 int main() {
     
+    std::cout << std::endl;
+
     Data original(42, "Test Data", 3.14159);
-    std::cout << "Original data: ";
+    std::cout << "Original data: " << std::endl;
     original.display();
     
     std::cout << "Original pointer address: " << &original << std::endl;
@@ -24,14 +26,6 @@ int main() {
     }
     
     deserialized->display();
-    
-    deserialized->id = 100;
-    deserialized->name = "Modified Data";
-    deserialized->value = 2.71828;
-    
-    std::cout << "After modification through deserialized pointer:" << std::endl;
-    std::cout << "Original data: ";
-    original.display();
 
     return 0;
 }
